@@ -1,0 +1,41 @@
+##################
+# To build Docker image, run from ~/2dsemseg as
+# $ nvidia-docker build -t dockerimage -f docker/Dockerfile.gpu .
+##################
+# Base image
+FROM tensorflow/tensorflow:1.8.0-gpu
+
+LABEL maintainer='G. Cavallaro (FZJ), M. Goetz (KIT), V. Kozlov (KIT)'
+# 2D semantic segmentation (Vaihingen dataset)
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    apt-get install -y --no-install-recommends \
+         git \
+         curl \
+         wget \
+         python-setuptools \
+         python-pip \
+         python-wheel && \ 
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /root/.cache/pip/* && \
+    rm -rf /tmp/*
+
+# Set the working directory
+WORKDIR /2dsemseg
+
+# Clone recent version from github
+RUN cd / && git clone https://github.com/vykozlov/2dsemseg
+
+# Install python packages listed in requirements.txt
+RUN pip --no-cache-dir install -r /2dsemseg/requirements.txt && \
+    rm -rf /root/.cache/pip/* && \
+    rm -rf /tmp/*
+
+## REMINDER: Tensorflow Docker Images already EXPOSE ports 6006 and 8888
+
+## When running the container do NOT forget to mount data and models directories accordingly!
+## $HOSTDIR/data -> /2dsemseg/data
+## $HOSTDIR/models -> /2dsemseg/models
+CMD python /2dsemseg/2dsemseg/models/train_resnet50_fcn.py /2dsemseg/data/ /2dsemseg/models/resnet50_fcn_weights.hdf5 True False
+
