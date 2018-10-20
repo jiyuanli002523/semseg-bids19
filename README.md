@@ -8,50 +8,33 @@ Project Organization
 
     ├── LICENSE
     ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+    ├── data               <- Placeholder to put training and validation data
     │
     ├── docker             <- Directory for Dockerfile(s)
     │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials (if many user development), 
-    │                         and a short `_` delimited description, e.g.
-    │                         `1.0-jqp-initial_data_exploration.ipynb`.
+    ├── models             <- Placeholder for trained and serialized models, model predictions, or model summaries
     │
     ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
     │
     ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
     │
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so 2dsemseg can be imported
-    ├── 2dsemseg    <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes 2dsemseg a Python module
-    │   │
-    │   ├── dataset        <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   └── model.py
-    │   │
-    │   └── tests          <- Scripts to perfrom code testing + pylint script
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
+    ├── 2dsemseg           <- Source code for use in this project.
+        ├── __init__.py    <- Makes 2dsemseg a Python module
+        │
+        ├── augmentation.py  <- to apply augmentation on original data
+        │
+        ├── data_io.py       <- to generate the Training and Validation Set from original data
+        │
+        ├── evaluate_network.py    <- to test trained netowrk
+        │
+        └── model_generator.py     <- model generator :-)
+        │
+        └── resnet_edit.py         <- ResNet50 for Keras
+        │
+        └── storeincsv.py          <- module to write csv summary
+        │
+        └── train_resnet50_fcn.py  <- main code for training
 
 
---------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
