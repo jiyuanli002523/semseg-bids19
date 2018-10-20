@@ -1,11 +1,9 @@
 ##################
-# Run from ~/2dsemseg as
-# $> docker build -t dockerimage -f docker/Dockerfile.dev .
-# Then use as
-# $> docker run -ti -v ~/2dsemseg:/app dockerimage /bin/bash
+# To build Docker image, run from ~/2dsemseg as
+# $ nvidia-docker build -t dockerimage -f docker/Dockerfile.gpu .
 ##################
-# Base image, e.g. tensorflow/tensorflow:1.7.0
-FROM tensorflow/tensorflow:1.8.0-gpu
+# Base image
+FROM tensorflow/tensorflow:1.8.0
 
 LABEL maintainer='G. Cavallaro (FZJ), M. Goetz (KIT), V. Kozlov (KIT)'
 # 2D semantic segmentation (Vaihingen dataset)
@@ -23,32 +21,19 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     rm -rf /root/.cache/pip/* && \
     rm -rf /tmp/*
 
-# Set LANG environment
-ENV LANG C.UTF-8
-
 # Set the working directory
-WORKDIR /app
+WORKDIR /2dsemseg
 
 # Install python packages listed in requirements.txt
 COPY requirements.txt /root
-RUN pip --no-cache-dir install -r /root/requirements.txt \
-### (OPTIONAL!) If you want to use Jupyter, uncomment:
-#        jupyter \
-#        jupyterlab && \
-#   python -m ipykernel.kernelspec \
-###
-    && \
+RUN pip --no-cache-dir install -r /root/requirements.txt && \
     rm -rf /root/.cache/pip/* && \
     rm -rf /tmp/*
 
-### (OPTIONAL!) If you want to use Jupyter, uncomment: 
-## Set up our notebook config.
-#COPY docker/jupyter/jupyter_notebook_config.py /root/.jupyter/
-#COPY docker/jupyter/run_jupyter.sh /
-## For Jupyter terminal
-#ENV SHELL /bin/bash
-#
 ## REMINDER: Tensorflow Docker Images already EXPOSE ports 6006 and 8888
-#EXPOSE 8888
-###
+
+## When running the container do NOT forget to mount data and models directories accordingly!
+## $HOSTDIR/data -> /2dsemseg/data
+## $HOSTDIR/models -> /2dsemseg/models
+CMD python /2dsemseg/2dsemseg/models/train_resnet50_fcn.py --datapath=/2dsemseg/data/ --model_out=/2dsemseg/models/resnet50_fcn_weights.hdf5 --nepochs=1
 
