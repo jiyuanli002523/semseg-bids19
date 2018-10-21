@@ -1,7 +1,8 @@
 2D Semantic Segmentation
 ==============================
 
-2D semantic segmentation (Vaihingen dataset)
+2D semantic segmentation (Vaihingen dataset). 
+Version fixed for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019 Conference).
 
 Project Organization
 ------------
@@ -15,8 +16,6 @@ Project Organization
     ├── models             <- Placeholder for trained and serialized models, model predictions, or model summaries
     │
     ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
     │
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
