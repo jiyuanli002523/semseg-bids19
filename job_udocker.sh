@@ -9,7 +9,7 @@
 
 ####### MAIN CONFIG #######
 # NUMGPUS: number of GPUs to use, up to the max number available on ONE node
-NUMGPUS=4
+NUMGPUS=1
 # UCONTAINER: udocker container to use
 # Example to prepare the container:
 # $ udocker pull vykozlov/2dsemseg:bids2019-gpu
