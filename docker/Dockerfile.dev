@@ -1,6 +1,15 @@
 ##################
-# To build Docker image, run from ~/2dsemseg as
-# $ nvidia-docker build -t dockerimage -f docker/Dockerfile.gpu .
+# This is to build Docker image for development, 
+# i.e. it contains all right packages but 
+# application source code is mounted from HOST (~/2dsemseg as pulled from github)
+#
+# To build the image, run from ~/2dsemseg as
+# $ docker build -t dockerimage -f docker/Dockerfile.dev .
+#
+# Later to use the image and access its shell:
+# udocker run -v $HOSTDIR/2dsemseg:/app dockerimage /bin/bash
+#
+# REMINDER! You may also need to mount other directories, e.g. for data
 ##################
 # Base image
 FROM tensorflow/tensorflow:1.8.0
@@ -22,7 +31,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     rm -rf /tmp/*
 
 # Set the working directory
-WORKDIR /2dsemseg
+WORKDIR /app
 
 # Install python packages listed in requirements.txt
 COPY requirements.txt /root
@@ -33,7 +42,6 @@ RUN pip --no-cache-dir install -r /root/requirements.txt && \
 ## REMINDER: Tensorflow Docker Images already EXPOSE ports 6006 and 8888
 
 ## When running the container do NOT forget to mount data and models directories accordingly!
-## $HOSTDIR/data -> /2dsemseg/data
-## $HOSTDIR/models -> /2dsemseg/models
-CMD python /2dsemseg/2dsemseg/models/train_resnet50_fcn.py --datapath=/2dsemseg/data/ --model_out=/2dsemseg/models/resnet50_fcn_weights.hdf5 --nepochs=1
-
+## $HOSTDIR/data -> /app/data
+## $HOSTDIR/models -> /app/models
+##
