@@ -24,8 +24,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 # Set the working directory
 WORKDIR /2dsemseg
 
-# Clone recent version from github
-RUN cd / && git clone https://github.com/vykozlov/2dsemseg
+# Clone bids2019 branch from github
+RUN cd / && git clone -b bids2019 --single-branch https://github.com/vykozlov/2dsemseg.git
 
 # Install python packages listed in requirements.txt
 RUN pip --no-cache-dir install -r /2dsemseg/requirements.txt && \
@@ -37,5 +37,7 @@ RUN pip --no-cache-dir install -r /2dsemseg/requirements.txt && \
 ## When running the container do NOT forget to mount data and models directories accordingly!
 ## $HOSTDIR/data -> /2dsemseg/data
 ## $HOSTDIR/models -> /2dsemseg/models
-CMD python /2dsemseg/2dsemseg/models/train_resnet50_fcn.py /2dsemseg/data/ /2dsemseg/models/resnet50_fcn_weights.hdf5 True False
-
+CMD python /2dsemseg/2dsemseg/train_resnet50_fcn.py \
+           --data_path=/2dsemseg/data \
+           --model=/2dsemseg/models/resnet50_fcn_weights.hdf5 \
+           --log=/2dsemseg/models/resnet50_fcn_weights_log.csv

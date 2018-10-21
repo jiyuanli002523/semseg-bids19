@@ -21,7 +21,7 @@ DLData=$HOME/datasets/vaihingen/data                   # directory with Training
 DLModels=$HOME/datasets/vaihingen/models               # directory for the output model file with weights
 
 # DLScriptOpts: options for the script. N.B. default n_epochs is 20
-DLScriptOpts="--data_path=$DLData --model=$DLModels/$RUNName"_weights.hdf5" --log=$DLModels/$RUNName-log.csv --n_gpus=$NUMGPUS --n_epochs=2"
+DLScriptOpts="--data_path=$DLData --model=$DLModels/$RUNName'_weights.hdf5' --log=$DLModels/$RUNName'_log.csv' --n_gpus=$NUMGPUS"
 ########
 
 ## for NFS v2/v3 local cache path needed
