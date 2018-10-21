@@ -27,7 +27,7 @@ DLData=/2dsemseg/data                                 # mount point inside conta
 DLModels=/2desemseg/models                            # mount point inside container for the output model
 
 # DLScriptOpts: options for the script. N.B. default n_epochs=20
-DLScriptOpts="--data_path=$DLData --model=$DLModels/$RUNName'_weights.hdf5' --log=$DLModels/$RUNName'_log.csv' --n_gpus=$NUMGPUS"
+DLScriptOpts="--data_path=${DLData} --model=${DLModels}/${RUNName}_weights.hdf5 --log=${DLModels}/${RUNName}_log.csv --n_gpus=${NUMGPUS}"
 
 ###########################
 UDOCKER_DIR="$HOME/.udocker"                          # udocker main directory.
