@@ -2,7 +2,7 @@
 ==============================
 
 2D semantic segmentation (Vaihingen dataset). 
-Version fixed for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019 Conference).
+Version fixed for the [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference.
 
 Project Organization
 ------------
