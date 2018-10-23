@@ -33,7 +33,7 @@ DLScriptOpts="--data_path=${DLData} --model=${DLModels}/${RUNName}_weights.hdf5 
 UDOCKER_DIR="$HOME/.udocker"                          # udocker main directory.
 echo "[INFO] udocker container: $UCONTAINER"
 # following line has to be run only first time
-udocker setup --nvidia ${UCONTAINER}
+udocker setup --execmode=F3 --nvidia ${UCONTAINER}
 ##### >>> now run the script:
 # we mount HOST directory with Training and Validation data 
 # and directory for the output model inside the container

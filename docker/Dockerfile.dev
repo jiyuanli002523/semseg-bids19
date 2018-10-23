@@ -34,8 +34,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 WORKDIR /app
 
 # Install python packages listed in requirements.txt
-COPY requirements.txt /root
-RUN pip --no-cache-dir install -r /root/requirements.txt && \
+COPY requirements-dev.txt /root
+RUN pip --no-cache-dir install -r /root/requirements-dev.txt && \
     rm -rf /root/.cache/pip/* && \
     rm -rf /tmp/*
 
@@ -44,4 +44,3 @@ RUN pip --no-cache-dir install -r /root/requirements.txt && \
 ## When running the container do NOT forget to mount data and models directories accordingly!
 ## $HOSTDIR/data -> /app/data
 ## $HOSTDIR/models -> /app/models
-##
