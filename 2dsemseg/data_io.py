@@ -1,9 +1,9 @@
 # imports:
-import numpy as np
 import h5py
 import sys
+import numpy as np
 from sys import argv
-
+from os import path
 
 # load one of the vaihingen images, specified by image_number; by default only the first 3 channels are taken:
 def load_vaihingen_image(filename, image_number, only_three_channels=True, show_properties=False):
@@ -72,7 +72,7 @@ def generate_dataset(data_path, image_numbers, overlap_factor):
     x_list = []
     y_list = []
     for i in image_numbers:
-        file = file_directory + filename + str(i) + file_extension
+        file = path.join(file_directory, filename + str(i) + file_extension)
         print file
         x, y = image_to_dataset(file, i, [size, size], overlap_factor)
         x_list.extend(x)
@@ -112,22 +112,18 @@ def main(arguments):
     output_path = arguments[2]
 
     # files used for training:
-    #training_nums = [1, 3, 5, 7, 11, 13, 17, 21, 26, 28, 34, 37]
-    training_nums = [15]
+    training_nums = [1, 3, 5, 7, 11, 13, 17, 21, 26, 28, 34, 37]
 
     # files used for validation:
-    #validation_nums = [30, 32]
-    validation_nums = [30]
+    validation_nums = [30, 32]
 
     # generate and save the training and validation set:
     overlap = 0.6
     x_train, y_train = generate_dataset(data_path, training_nums, overlap)
     x_val, y_val = generate_dataset(data_path, validation_nums, overlap)
-    #save_dataset('/gpfs/gsstest/data/gabcav/semseg/vaihingen/vaihingen_train.hdf5', x_train, y_train)
-    #save_dataset('/gpfs/gsstest/data/gabcav/semseg/vaihingen/vaihingen_val.hdf5', x_val, y_val)
 
-    save_dataset(output_path + 'vaihingen_train.hdf5', x_train, y_train)
-    save_dataset(output_path + 'vaihingen_val.hdf5', x_val, y_val)
+    save_dataset(path.join(output_path,'vaihingen_train.hdf5'), x_train, y_train)
+    save_dataset(path.join(output_path,'vaihingen_val.hdf5'), x_val, y_val)
 
 
 if __name__ == '__main__':
