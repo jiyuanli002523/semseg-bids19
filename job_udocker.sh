@@ -12,9 +12,9 @@
 NUMGPUS=1
 # UCONTAINER: udocker container to use
 # Example to prepare the container:
-# $ udocker pull vykozlov/semseg:bids2019-gpu
-# $ udocker create --name=bids2019-gpu vykozlov/semseg:bids2019-gpu
-UCONTAINER="bids2019-gpu"
+# $ udocker pull vykozlov/semseg:bids19-gpu
+# $ udocker create --name=bids19-gpu vykozlov/semseg:bids19-gpu
+UCONTAINER="bids19-gpu"
 
 # RUNName: name of the run
 RUNName="udocker-gpus=$NUMGPUS"

@@ -10,7 +10,7 @@ You can either use python's virtual environment or use Docker image to run the c
 
 ### Using (u)Docker
 The code and all necessary dependencies are provided in the Docker image at Docker Hub:
-https://hub.docker.com/r/vykozlov/semseg/tags/ , tag 'bids2019-gpu'
+https://hub.docker.com/r/vykozlov/semseg/tags/ , tag 'bids19-gpu'
 
 #### Pre-requisites
 In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). Please, notice that _uDocker_ is entirely a user tool, i.e. **no** root priveleges of any kind are needed.
@@ -22,22 +22,22 @@ In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebs
   $ export UDOCKER_DIR=$HOME/.udocker
   $ ./udocker install
   ```
-2. `$ udocker pull vykozlov/semseg:bids2019-gpu` to pull Docker image locally
-3. `$ udocker create --name=bids2019-gpu vykozlov/semseg:bids2019-gpu` to create local container
-4. `$ udocker setup --execmode=F3 --nvidia bids2019-gpu` to enable Fakechroot execution mode and to use the host NVIDIA driver
+2. `$ udocker pull vykozlov/semseg:bids19-gpu` to pull Docker image locally
+3. `$ udocker create --name=bids19-gpu vykozlov/semseg:bids19-gpu` to create local container
+4. `$ udocker setup --execmode=F3 --nvidia bids19-gpu` to enable Fakechroot execution mode and to use the host NVIDIA driver
 
 #### Prepare data
 1. Download Vaihingen dataset in $HOSTDIR_WITH_DATA/raw
 2. Prepare data for training:
 ```
-$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data bids2019-gpu python /semseg-bids19/semseg/data_io.py /semseg-bids19/data/raw /semseg-bids19/data
+$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data bids19-gpu python /semseg-bids19/semseg/data_io.py /semseg-bids19/data/raw /semseg-bids19/data
 ```
 where 
   * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. $HOSTDIR_WITH_DATA/raw is expected to have _raw_ .hdf5 files, i.e. which you downloaded (see above).
 
 #### Run training
 ```
-$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/semseg-bids19/models bids2019-gpu
+$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/semseg-bids19/models bids19-gpu
 ```
 where 
   * $HOSTDIR_WITH_DATA : directory at your host with vaihingen .hdf5 files prepared for training
@@ -52,7 +52,7 @@ python /semseg-bids19/semseg/train_resnet50_fcn.py \
 ```
 If you want to redefine `train_resnet50_fcn.py` parameters, your run for example:
 ```
-$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/semseg-bids19/models bids2019-gpu python /semseg-bids19/semseg/train_resnet50_fcn.py --data_path=/semseg-bids19/data --model=/semseg-bids19/models/resnet50_fcn_weights.hdf5 --log=/semseg-bids19/models/resnet50_fcn_weights_log.csv --n_epochs=25
+$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/semseg-bids19/models bids19-gpu python /semseg-bids19/semseg/train_resnet50_fcn.py --data_path=/semseg-bids19/data --model=/semseg-bids19/models/resnet50_fcn_weights.hdf5 --log=/semseg-bids19/models/resnet50_fcn_weights_log.csv --n_epochs=25
 ```
 **Best way** is to put this in a shell script. For the example, please, see `job_udocker.sh`
 
@@ -70,33 +70,33 @@ $ sudo pip install -U virtualenv
 
 4. virtual environment is created by 
 ```
-$ virtualenv -p python2.7 $HOME/.venv/bids2019
+$ virtualenv -p python2.7 $HOME/.venv/bids19
 ```
 5. activate the virtual environment: 
 ```
-$ source $HOME/.venv/bids2019/bin/activate
+$ source $HOME/.venv/bids19/bin/activate
 ```
 6. clone the code from this repository to your local directory
 
 7. go to this directory, install required python packages listed in requirements.txt file:
 ```
-(bids2019)$ pip install -r requirements.txt
+(bids19)$ pip install -r requirements.txt
 ```
-In the following `(bids2019)$` indicates that you have to act from the virtual environment.
+In the following `(bids19)$` indicates that you have to act from the virtual environment.
 
 #### Prepare data
 Similar to udocker:
 1. Download Vaihingen dataset in $HOSTDIR_WITH_DATA/raw
 2. Prepare data for training:
 ```
-(bids2019)$ python ./data_io.py $HOSTDIR_WITH_DATA/raw $HOSTDIR_WITH_DATA
+(bids19)$ python ./data_io.py $HOSTDIR_WITH_DATA/raw $HOSTDIR_WITH_DATA
 ```
 where 
   * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. 
 
 #### Run training
 ```
-(bids2019)$ python ./train_resnet50_fcn.py --data_path=$HOSTDIR_WITH_DATA --model=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights.hdf5 --log=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights_log.csv --n_epochs=25
+(bids19)$ python ./train_resnet50_fcn.py --data_path=$HOSTDIR_WITH_DATA --model=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights.hdf5 --log=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights_log.csv --n_epochs=25
 ```
 Again **best way** would be to put this in a shell script. For the example, please, see `job_bmetal.sh`.
 

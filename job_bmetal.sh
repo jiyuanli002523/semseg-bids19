@@ -9,7 +9,7 @@
 # NUMGPUS: number of GPUs to use, up to the max number available on ONE node
 NUMGPUS=1
 # VIRTEnv: python virtual environment where all necessary packages are installed
-VIRTEnv="bids2019"
+VIRTEnv="bids19"
 source $HOME/.venv/$VIRTEnv/bin/activate
 
 # RUNName: name of the run
