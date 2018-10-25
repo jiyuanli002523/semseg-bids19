@@ -6,9 +6,56 @@ Version fixed for the [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEven
 
 ## Code running
 
-You can either use python's virtual environment or use Docker image to run the code.
+You can either use python's virtual environment or use Docker image to run the code. We recommend the latter way.
+
+### Using (u)Docker
+The code and all necessary dependencies are provided in the Docker image at Docker Hub:
+https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019'
+
+#### Pre-requisites
+In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`).
+1. Install _uDocker_, refer to [udocker/installation manual](https://github.com/indigo-dc/udocker/blob/devel/doc/installation_manual.md) for more details but in short:
+  * best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!). Then
+  ```
+  $ curl https://raw.githubusercontent.com/indigo-dc/udocker/devel/udocker.py > udocker
+  $ chmod u+rx ./udocker
+  $ export UDOCKER_DIR=$HOME/.udocker
+  $ ./udocker install
+  ```
+2. `$ udocker pull vykozlov/2dsemseg:bids2019` to pull Docker image locally
+3. `$ udocker create --name=bids2019-gpu vykozlov/2dsemseg:bids2019` to create local container
+4. `$ udocker setup --execmode=F3 --nvidia bids2019-gpu` to enable Fakechroot execution mode and to use the host NVIDIA driver
+
+#### Prepare data
+1. Download Vaihingen dataset in $HOSTDIR_WITH_DATA/raw
+2. Prepare data for training:
+```
+$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data bids2019 python /2dsemseg/2dsemseg/data_io.py /2dsemseg/data/raw /2dsemseg/data
+```
+where 
+  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files
+
+#### Run training
+`$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models bids2019`
+where 
+  * $HOSTDIR_WITH_DATA : directory at your host with Vaihingen .hdf5 files
+  * $HOSTDIR_FOR_MODELS: directory at your host where output training files will be stored
+
+By default this will run the followinig command inside container using 20 epochs for training:
+```
+python /2dsemseg/2dsemseg/train_resnet50_fcn.py \
+       --data_path=/2dsemseg/data \
+       --model=/2dsemseg/models/resnet50_fcn_weights.hdf5 \
+       --log=/2dsemseg/models/resnet50_fcn_weights_log.csv
+```
+If you want to redefine `train_resnet50_fcn.py` parameters, your run for example:
+```
+$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models bids2019 python /2dsemseg/2dsemseg/train_resnet50_fcn.py --data_path=/2dsemseg/data --model=/2dsemseg/models/resnet50_fcn_weights.hdf5 --log=/2dsemseg/models/resnet50_fcn_weights_log.csv --n_epochs=25
+```
+Best way is to put this in a shell script. For the exmaple, please, see `job_udocker.sh`
 
 ### Using Virtual Environment
+#### Pre-requisites
 In our tests for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we used:
 1. python 2.7
 2. [CUDA Toolkit 9.0.176](https://developer.nvidia.com/cuda-90-download-archive) and [cuDNN 7.0.5](https://developer.nvidia.com/rdp/cudnn-archive)
@@ -34,28 +81,7 @@ $ source $HOME/.venv/bids2019/bin/activate
 (bids2019)$ pip install -r requirements.txt
 ```
 
-### Using (u)Docker
-We also provide the code and all necessary dependencies in the Docker image at Docker Hub:
-https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019'
-
-In the paper we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). In order to run the code:
-1. Install _uDocker_, refer to [udocker/installation manual](https://github.com/indigo-dc/udocker/blob/devel/doc/installation_manual.md) for more details but in short:
-  * best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!)
-  * then
-  ```
-  $ curl https://raw.githubusercontent.com/indigo-dc/udocker/devel/udocker.py > udocker
-  $ chmod u+rx ./udocker
-  $ export UDOCKER_DIR=$HOME/.udocker
-  $ ./udocker install
-  ```
-2. `$ udocker pull vykozlov/2dsemseg:bids2019` to pull Docker image locally
-3. `$ udocker create --name=bids2019 vykozlov/2dsemseg:bids2019` to create local container
-4. If your host system has GPUs, run
-```
-$ udocker setup --execmode=F3 --nvidia bids2019
-```
 If you have to submit your job to a batch system, include this command in your job submission.
-5. `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models` 
 
 ## Project Organization
 
