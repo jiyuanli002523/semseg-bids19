@@ -36,7 +36,9 @@ where
   * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. $HOSTDIR_WITH_DATA/raw is expected to have _raw_ .hdf5 files, i.e. which you downloaded (see above).
 
 #### Run training
-`$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/semseg-bids19/models bids2019-gpu`
+```
+$ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/semseg-bids19/models bids2019-gpu
+```
 where 
   * $HOSTDIR_WITH_DATA : directory at your host with vaihingen .hdf5 files prepared for training
   * $HOSTDIR_FOR_MODELS: directory at your host where output training files will be stored.
