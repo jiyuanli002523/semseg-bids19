@@ -10,7 +10,7 @@ You can either use python's virtual environment or use Docker image to run the c
 
 ### Using (u)Docker
 The code and all necessary dependencies are provided in the Docker image at Docker Hub:
-https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019'
+https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019-gpu'
 
 #### Pre-requisites
 In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). Please, notice that _uDocker_ is entirely user tool, i.e. **no** root priveleges of any kind are needed.
