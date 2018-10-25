@@ -56,6 +56,29 @@ $ udocker run -v $HOSTDIR_WITH_DATA:/semseg-bids19/data -v $HOSTDIR_FOR_MODELS:/
 ```
 **Best way** is to put this in a shell script. For the example, please, see `job_udocker.sh`
 
+#### Use of training_resnet50_fcn.py
+```
+usage: train_resnet50_fcn.py [-h] [--data_path DATA_PATH] [--model MODEL]
+                             [--n_epochs N_EPOCHS] [--n_gpus N_GPUS]
+                             [--no_augmentation] [--load_weights] [--log LOG]
+```
+
+optional arguments:
+```
+  -h, --help            show this help message and exit
+  --data_path DATA_PATH
+                        Location of vaihingen_train.hdf5 and
+                        vaihingen_val.hdf5 (e.g.,
+                        /homea/hpclab/train002/semseg/data/ )
+  --model MODEL         Location + name of the output model (e.g., /homea/hpcl
+                        ab/train002/semseg/models/resnet50_fcn_weights.hdf5)
+  --n_epochs N_EPOCHS   Number of epochs to train on
+  --n_gpus N_GPUS       Number of GPUs to train on (one node only!)
+  --no_augmentation     Skip augmentation
+  --load_weights        Use transfer learning and load pre-trained weights
+  --log LOG             Location + name of the csv log file
+```
+
 ### Using Virtual Environment
 #### Pre-requisites
 In our tests for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we used:
