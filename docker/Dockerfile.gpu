@@ -1,5 +1,5 @@
 ##################
-# To build Docker image, run from ~/2dsemseg as
+# To build Docker image, run from ~/semseg-bids19 as
 # $ nvidia-docker build -t dockerimage -f docker/Dockerfile.gpu .
 ##################
 # Base image
@@ -22,22 +22,22 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     rm -rf /tmp/*
 
 # Set the working directory
-WORKDIR /2dsemseg
+WORKDIR /semseg-bids19
 
-# Clone bids2019 branch from github
-RUN cd / && git clone -b bids2019 --single-branch https://github.com/vykozlov/2dsemseg.git
+# Clone repository from github
+RUN cd / && git clone https://github.com/vykozlov/semseg-bids19.git
 
 # Install python packages listed in requirements.txt
-RUN pip --no-cache-dir install -r /2dsemseg/requirements.txt && \
+RUN pip --no-cache-dir install -r /semseg-bids19/requirements.txt && \
     rm -rf /root/.cache/pip/* && \
     rm -rf /tmp/*
 
 ## REMINDER: Tensorflow Docker Images already EXPOSE ports 6006 and 8888
 
 ## When running the container do NOT forget to mount data and models directories accordingly!
-## $HOSTDIR/data -> /2dsemseg/data
-## $HOSTDIR/models -> /2dsemseg/models
-CMD python /2dsemseg/2dsemseg/train_resnet50_fcn.py \
-           --data_path=/2dsemseg/data \
-           --model=/2dsemseg/models/resnet50_fcn_weights.hdf5 \
-           --log=/2dsemseg/models/resnet50_fcn_weights_log.csv
+## $HOSTDIR/data -> /semseg-bids19/data
+## $HOSTDIR/models -> /semseg-bids19/models
+CMD python /semseg-bids19/semseg/train_resnet50_fcn.py \
+           --data_path=/semseg-bids19/data \
+           --model=/semseg-bids19/models/resnet50_fcn_weights.hdf5 \
+           --log=/semseg-bids19/models/resnet50_fcn_weights_log.csv

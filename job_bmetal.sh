@@ -15,8 +15,8 @@ source $HOME/.venv/$VIRTEnv/bin/activate
 # RUNName: name of the run
 RUNName="bmetal-$VIRTEnv-gpus=$NUMGPUS"
 
-DLProject=$HOME/workspace/2dsemseg                     # directory with the source code
-DLScript=$DLProject/2dsemseg/train_resnet50_fcn.py     # deep learning script to run
+DLProject=$HOME/workspace/semseg-bids19                # directory with the source code
+DLScript=$DLProject/semseg/train_resnet50_fcn.py     # deep learning script to run
 DLData=$HOME/datasets/vaihingen/data                   # directory with Training and Valiation data (.hdf5)
 DLModels=$HOME/datasets/vaihingen/models               # directory for the output model file with weights
 

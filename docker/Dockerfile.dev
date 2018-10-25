@@ -1,13 +1,13 @@
 ##################
 # This is to build Docker image for development, 
 # i.e. it contains all right packages but 
-# application source code is mounted from HOST (~/2dsemseg as pulled from github)
+# application source code is mounted from HOST (~/semseg-bids19 as pulled from github)
 #
-# To build the image, run from ~/2dsemseg as
+# To build the image, run from ~/semseg-bids19 as
 # $ docker build -t dockerimage -f docker/Dockerfile.dev .
 #
 # Later to use the image and access its shell:
-# udocker run -v $HOSTDIR/2dsemseg:/app dockerimage /bin/bash
+# udocker run -v $HOSTDIR/semseg-bids19:/app dockerimage /bin/bash
 #
 # REMINDER! You may also need to mount other directories, e.g. for data
 ##################
