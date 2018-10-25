@@ -33,7 +33,7 @@ In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebs
 $ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data bids2019 python /2dsemseg/2dsemseg/data_io.py /2dsemseg/data/raw /2dsemseg/data
 ```
 where 
-  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. $HOSTDIR_WITH_DATA/raw is expected to have _raw_ .hdf5 files (see above).
+  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. $HOSTDIR_WITH_DATA/raw is expected to have _raw_ .hdf5 files, i.e. which you downloaded (see above).
 
 #### Run training
 `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models bids2019`
