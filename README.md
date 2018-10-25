@@ -1,7 +1,7 @@
 2D Semantic Segmentation
 ==============================
 
-2D semantic segmentation (Vaihingen dataset). 
+2D semantic segmentation ([Vaihingen dataset](http://www2.isprs.org/commissions/comm3/wg4/2d-sem-label-vaihingen.html)). 
 Version fixed for the [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference.
 
 ## Code running
