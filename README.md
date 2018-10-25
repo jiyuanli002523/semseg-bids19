@@ -43,7 +43,7 @@ where
   * $HOSTDIR_WITH_DATA : directory at your host with vaihingen .hdf5 files prepared for training
   * $HOSTDIR_FOR_MODELS: directory at your host where output training files will be stored.
 
-By default this will run the followinig command inside container using 20 epochs for training:
+By default this will run the followinig command inside container using 20 epochs for training and one GPU:
 ```
 python /semseg-bids19/semseg/train_resnet50_fcn.py \
        --data_path=/semseg-bids19/data \
@@ -138,14 +138,14 @@ If you have to submit your job to a batch system, you can use the script, either
     │
     ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
     │                         generated with `pip freeze > requirements.txt`
-    ├── semseg           <- Source code for use in this project.
+    ├── semseg             <- Source code for use in this project.
         ├── __init__.py    <- Makes semseg a Python module
         │
         ├── augmentation.py  <- to apply augmentation on original data
         │
         ├── data_io.py       <- to generate the Training and Validation Set from original data
         │
-        ├── evaluate_network.py    <- to test trained netowrk
+        ├── evaluate_network.py    <- to test trained network
         │
         └── model_generator.py     <- model generator :-)
         │
