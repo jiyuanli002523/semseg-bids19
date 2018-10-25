@@ -38,11 +38,10 @@ $ source $HOME/.venv/bids2019/bin/activate
 We also provide the code and all necessary dependencies in the Docker image at Docker Hub:
 https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019'
 
-In the paper we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (--nvidia flag). In order to run the code:
+In the paper we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). In order to run the code:
 1. Install _uDocker_, refer to [udocker/installation manual](https://github.com/indigo-dc/udocker/blob/devel/doc/installation_manual.md) for more details but in short:
-
-a) best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!)
-b) then
+  a) best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!)
+  b) then
 ```
 $ curl https://raw.githubusercontent.com/indigo-dc/udocker/devel/udocker.py > udocker
 $ chmod u+rx ./udocker
@@ -55,7 +54,7 @@ $ ./udocker install
 ```
 $ udocker setup --execmode=F3 --nvidia bids2019
 ```
-5. `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models 
+5. `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models` 
 
 ## Project Organization
 
