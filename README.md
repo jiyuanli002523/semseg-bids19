@@ -13,9 +13,9 @@ The code and all necessary dependencies are provided in the Docker image at Dock
 https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019-gpu'
 
 #### Pre-requisites
-In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). Please, notice that _uDocker_ is entirely user tool, i.e. **no** root priveleges of any kind are needed.
+In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). Please, notice that _uDocker_ is entirely a user tool, i.e. **no** root priveleges of any kind are needed.
 1. Install _uDocker_, refer to [udocker/installation manual](https://github.com/indigo-dc/udocker/blob/devel/doc/installation_manual.md) for more details but in short:
-  * best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!). Then
+  - best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!). Then
   ```
   $ curl https://raw.githubusercontent.com/indigo-dc/udocker/devel/udocker.py > udocker
   $ chmod u+rx ./udocker
@@ -33,13 +33,13 @@ In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebs
 $ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data bids2019 python /2dsemseg/2dsemseg/data_io.py /2dsemseg/data/raw /2dsemseg/data
 ```
 where 
-  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. 
+  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. $HOSTDIR_WITH_DATA/raw is expected to have _raw_ .hdf5 files (see above).
 
 #### Run training
 `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models bids2019`
 where 
-  * $HOSTDIR_WITH_DATA : directory at your host with Vaihingen .hdf5 files
-  * $HOSTDIR_FOR_MODELS: directory at your host where output training files will be stored
+  * $HOSTDIR_WITH_DATA : directory at your host with vaihingen .hdf5 files prepared for training
+  * $HOSTDIR_FOR_MODELS: directory at your host where output training files will be stored.
 
 By default this will run the followinig command inside container using 20 epochs for training:
 ```
@@ -96,7 +96,7 @@ where
 ```
 (bids2019)$ python ./train_resnet50_fcn.py --data_path=$HOSTDIR_WITH_DATA --model=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights.hdf5 --log=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights_log.csv --n_epochs=25
 ```
-Again **best way** would be to put this in a shell script. For the example, please, see `job_bmetal.sh`
+Again **best way** would be to put this in a shell script. For the example, please, see `job_bmetal.sh`.
 
 If you have to submit your job to a batch system, you can use the script, either `job_udocker.sh` or `job_bmetal.sh`, in your job submission. Please, adjust scripts to your needs :-)
 
