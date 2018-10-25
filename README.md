@@ -40,20 +40,21 @@ https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019'
 
 In the paper we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). In order to run the code:
 1. Install _uDocker_, refer to [udocker/installation manual](https://github.com/indigo-dc/udocker/blob/devel/doc/installation_manual.md) for more details but in short:
-  a) best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!)
-  b) then
-```
-$ curl https://raw.githubusercontent.com/indigo-dc/udocker/devel/udocker.py > udocker
-$ chmod u+rx ./udocker
-$ export UDOCKER_DIR=$HOME/.udocker
-$ ./udocker install
-```
-2. Use `$ udocker pull vykozlov/2dsemseg:bids2019` to pull Docker image locally
+  * best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!)
+  * then
+  ```
+  $ curl https://raw.githubusercontent.com/indigo-dc/udocker/devel/udocker.py > udocker
+  $ chmod u+rx ./udocker
+  $ export UDOCKER_DIR=$HOME/.udocker
+  $ ./udocker install
+  ```
+2. `$ udocker pull vykozlov/2dsemseg:bids2019` to pull Docker image locally
 3. `$ udocker create --name=bids2019 vykozlov/2dsemseg:bids2019` to create local container
 4. If your host system has GPUs, run
 ```
 $ udocker setup --execmode=F3 --nvidia bids2019
 ```
+If you have to submit your job to a batch system, include this command in your job submission.
 5. `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models` 
 
 ## Project Organization
