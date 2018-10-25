@@ -13,7 +13,7 @@ The code and all necessary dependencies are provided in the Docker image at Dock
 https://hub.docker.com/r/vykozlov/2dsemseg/tags/ , tag 'bids2019'
 
 #### Pre-requisites
-In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`).
+In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebsitePortal/2019-conference-on-big-data-from-space-bids19/bids-2019) Conference we use _uDocker_ container tool from [udocker/devel branch](https://github.com/indigo-dc/udocker/tree/devel) which has NVIDIA support (`--nvidia flag`). Please, notice that _uDocker_ is entirely user tool, i.e. **no** root priveleges of any kind are needed.
 1. Install _uDocker_, refer to [udocker/installation manual](https://github.com/indigo-dc/udocker/blob/devel/doc/installation_manual.md) for more details but in short:
   * best go to one of your $PATH directories, e.g. `$HOME/.local/bin` (depends on your system, type `echo $PATH` to check!). Then
   ```
@@ -33,7 +33,7 @@ In the paper for [BiDS 2019](https://www.bigdatafromspace2019.org/QuickEventWebs
 $ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data bids2019 python /2dsemseg/2dsemseg/data_io.py /2dsemseg/data/raw /2dsemseg/data
 ```
 where 
-  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files
+  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. 
 
 #### Run training
 `$ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models bids2019`
@@ -52,7 +52,7 @@ If you want to redefine `train_resnet50_fcn.py` parameters, your run for example
 ```
 $ udocker run -v $HOSTDIR_WITH_DATA:/2dsemseg/data -v $HOSTDIR_FOR_MODELS:/2dsemseg/models bids2019 python /2dsemseg/2dsemseg/train_resnet50_fcn.py --data_path=/2dsemseg/data --model=/2dsemseg/models/resnet50_fcn_weights.hdf5 --log=/2dsemseg/models/resnet50_fcn_weights_log.csv --n_epochs=25
 ```
-Best way is to put this in a shell script. For the exmaple, please, see `job_udocker.sh`
+**Best way** is to put this in a shell script. For the example, please, see `job_udocker.sh`
 
 ### Using Virtual Environment
 #### Pre-requisites
@@ -80,8 +80,25 @@ $ source $HOME/.venv/bids2019/bin/activate
 ```
 (bids2019)$ pip install -r requirements.txt
 ```
+In the following `(bids2019)$` indicates that you have to act from the virtual environment.
 
-If you have to submit your job to a batch system, include this command in your job submission.
+#### Prepare data
+Similar to udocker:
+1. Download Vaihingen dataset in $HOSTDIR_WITH_DATA/raw
+2. Prepare data for training:
+```
+(bids2019)$ python ./data_io.py $HOSTDIR_WITH_DATA/raw $HOSTDIR_WITH_DATA
+```
+where 
+  * $HOSTDIR_WITH_DATA : directory to put resulting vaihingen_train.hdf5 and vaihingen_val.hdf5 files. 
+
+#### Run training
+```
+(bids2019)$ python ./train_resnet50_fcn.py --data_path=$HOSTDIR_WITH_DATA --model=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights.hdf5 --log=$HOSTDIR_FOR_MODELS/resnet50_fcn_weights_log.csv --n_epochs=25
+```
+Again **best way** would be to put this in a shell script. For the example, please, see `job_bmetal.sh`
+
+If you have to submit your job to a batch system, you can use the script, either `job_udocker.sh` or `job_bmetal.sh`, in your job submission. Please, adjust scripts to your needs :-)
 
 ## Project Organization
 
